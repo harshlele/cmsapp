@@ -12,7 +12,7 @@ function AdminDashboard() {
   })
     .then((response) => {
       if (!response.ok && response.status == 401) {
-        nav("/admin/login");
+        nav("/admin/login?nosess=true");
       } else return response;
     })
     .then((r) => r.json())

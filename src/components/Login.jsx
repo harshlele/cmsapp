@@ -1,11 +1,18 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { auth } from "../utils/service";
 
 function Login(props) {
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
+  const [searchParams] = useSearchParams();
   const nav = useNavigate();
+
+  let sess = searchParams.get("nosess");
+  
+  if(Boolean(sess) == true){
+    props.showNotif("error","No active session, please login");
+  }
 
   const login = async (scope) => {
     if (user == "" || pass == "") {
@@ -18,8 +25,11 @@ function Login(props) {
     auth
       .authenticate(scope, reqBody)
       .then((res) => {
-        if (res.status == 1 && scope == "login") {
-          nav("/admin");
+        if (res.status == 1) {
+          if(scope == "login") nav("/admin",{ replace: true });
+        }
+        else{
+          props.showNotif("error", res.msg);
         }
       })
       .catch((e) => {

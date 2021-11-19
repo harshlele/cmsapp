@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Login(props) {
-  const baseUrl = `http://localhost:4000`;
+  const baseUrl = `http://127.0.0.1:3000`;
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
+  const nav = useNavigate();
 
   const login = async (scope) => {
     if (user == "" || pass == "") {
@@ -14,13 +16,16 @@ function Login(props) {
     let reqBody = { user, pass, scope };
 
     fetch(`${baseUrl}/auth`, {
+      credentials: "include",
       method: "POST",
       headers: { "Content-type": "application/json;charset=UTF-8" },
       body: JSON.stringify(reqBody),
     })
       .then((r) => r.json())
       .then((res) => {
-        console.log(res);
+        if (res.status == 1 && scope == "login") {
+          nav("/admin");
+        }
       })
       .catch((e) => {
         console.error(e);

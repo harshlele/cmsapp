@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { auth } from "../utils/service";
 
 function Login(props) {
-  const baseUrl = `http://127.0.0.1:3000`;
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
   const nav = useNavigate();
@@ -13,15 +13,10 @@ function Login(props) {
       return;
     }
 
-    let reqBody = { user, pass, scope };
+    let reqBody = { user, pass };
 
-    fetch(`${baseUrl}/auth`, {
-      credentials: "include",
-      method: "POST",
-      headers: { "Content-type": "application/json;charset=UTF-8" },
-      body: JSON.stringify(reqBody),
-    })
-      .then((r) => r.json())
+    auth
+      .authenticate(scope, reqBody)
       .then((res) => {
         if (res.status == 1 && scope == "login") {
           nav("/admin");

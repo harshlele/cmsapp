@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router-dom";
+import { auth } from "../utils/service";
 
 function AdminDashboard() {
   const nav = useNavigate();
 
-  fetch(`http://127.0.0.1:3000/admin/blogs`, {
+  fetch("/admin/blogs", {
     credentials: "include",
     method: "POST",
     headers: { "Content-type": "application/json;charset=UTF-8" },
@@ -23,20 +24,15 @@ function AdminDashboard() {
     });
 
   const logout = () => {
-    const reqBody = { scope: "logout" };
-    fetch("http://127.0.0.1:3000/auth", {
-      credentials: "include",
-      method: "POST",
-      headers: { "Content-type": "application/json;charset=UTF-8" },
-      body: JSON.stringify(reqBody),
-    })
-    .then((r) => r.json())
-    .then((res) => {
-      nav("/admin/login");
-    })
-    .catch((e) => {
-      console.log(e);
-    });
+    auth
+      .logout()
+      .then((res) => {
+        if (res.status != 1) console.log(res);
+        nav("/admin/login");
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   return (

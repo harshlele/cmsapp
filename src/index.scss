@@ -18,3 +18,40 @@ body,
 .cms-button {
   @apply my-2 border-2 border-green-800 rounded-sm px-5 py-2 mx-2 active:text-white active:bg-green-700;
 }
+
+.sidebar {
+  @apply bg-green-700 w-3/4 absolute;
+  height: calc(100% - 3rem);
+  left: 0;
+  transition: left 0.5s ease-in;
+  z-index: 10;
+
+  &.hide {
+    left: -100%;
+  }
+}
+
+.nav-content {
+  @apply w-full bg-green-200 absolute;
+  height: calc(100% - 3rem);
+  left: 0;
+}
+
+@media (min-width: 768px) {
+  .sidebar {
+    width: 25% !important;
+
+    &.hide {
+      left: 0;
+    }
+  }
+
+  .nav-content {
+    width: 75% !important;
+    left: 25% !important;
+  }
+}
+
+.filter-check {
+  transform: scale(1.5);
+}

@@ -1,8 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { auth } from "../utils/service";
+import { List, ArrowBarRight } from "react-bootstrap-icons";
+import { useState } from "react";
+import Sidebar from "./Sidebar";
 
 function AdminDashboard() {
   const nav = useNavigate();
+  const [isSidebarShow, setSidebar] = useState(false);
 
   fetch("/admin/blogs", {
     credentials: "include",
@@ -36,10 +40,36 @@ function AdminDashboard() {
   };
 
   return (
-    <div className="w-100 h-100 flex justify-center">
-      <button className="cms-button" onClick={logout}>
-        Logout
-      </button>
+    <div className="w-full h-full flex justify-center">
+      <div className="nav w-full h-full">
+        <div className="navbar w-full h-12 bg-green-700 flex justify-left border-2 border-green-800">
+          {document.body.clientWidth < 768 && (
+            <button
+              className="text-white text-4xl m-2"
+              onClick={() => {
+                setSidebar(!isSidebarShow);
+              }}
+            >
+              <List></List>
+            </button>
+          )}
+
+          <input
+            type="text"
+            className="p-2 bg-transparent my-2 text-white md:mx-auto"
+            placeholder="Search..."
+            id="search"
+          />
+
+          <button className="text-white text-4xl m-2 md:mx-2 ml-auto">
+            <ArrowBarRight />
+          </button>
+        </div>
+        <div className={`sidebar ${isSidebarShow ? "" : "hide"}`}>
+          <Sidebar></Sidebar>
+        </div>
+        <div className="nav-content">{document.body.clientWidth}</div>
+      </div>
     </div>
   );
 }

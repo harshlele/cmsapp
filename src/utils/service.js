@@ -2,14 +2,17 @@ export const auth = {
   login(body) {
     return this.authenticate("login", body);
   },
-  signup(body) {
-    return this.authenticate("signup",body)
+  change_password(body) {
+    return this.authenticate("change_password", body);
   },
-  logout(){
-    return this.authenticate("logout",{});
+  signup(body) {
+    return this.authenticate("signup", body)
+  },
+  logout() {
+    return this.authenticate("logout", {});
   },
   authenticate(scope, body) {
-    return fetch("/auth",{
+    return fetch("/auth", {
       method: "POST",
       credentials: "include",
       method: "POST",

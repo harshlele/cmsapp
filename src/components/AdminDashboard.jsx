@@ -61,7 +61,10 @@ function AdminDashboard() {
             id="search"
           />
 
-          <button className="text-white text-4xl m-2 md:mx-2 ml-auto">
+          <button
+            className="text-white text-4xl m-2 md:mx-2 ml-auto"
+            onClick={logout}
+          >
             <ArrowBarRight />
           </button>
         </div>

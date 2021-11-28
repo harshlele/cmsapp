@@ -1,15 +1,17 @@
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "react-notifications/lib/notifications.css";
-import {NotificationContainer, NotificationManager} from "react-notifications";
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
 
 import Login from "./components/Login";
 import AdminDashboard from "./components/AdminDashboard";
 import Blog from "./components/Blog";
 function App() {
-
-  const showNotif = (type,title,msg) => {
-    NotificationManager[type](msg,title);
+  const showNotif = (type, title, msg) => {
+    NotificationManager[type](msg, title);
   };
 
   return (
@@ -22,10 +24,20 @@ function App() {
             path="/admin"
             element={<AdminDashboard></AdminDashboard>}
           ></Route>
-          <Route exact path="/admin/login" element={<Login showNotif={showNotif}></Login>}></Route>
+          <Route
+            exact
+            path="/admin/login"
+            element={<Login showNotif={showNotif}></Login>}
+            passChange={false}
+          ></Route>
+          <Route
+            exact
+            path="/admin/change_password"
+            element={<Login showNotif={showNotif} passChange={true}></Login>}
+          ></Route>
         </Routes>
       </div>
-      <NotificationContainer/>
+      <NotificationContainer />
     </Router>
   );
 }
